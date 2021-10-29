@@ -9,6 +9,7 @@ use App\Http\Controllers\LearnController;
 use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\NutritionistController;
+use App\Http\Controllers\UserDetController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,6 +29,13 @@ Route::post('/register', [UserController::class, 'register']);
 
 Route::post('/login', [UserController::class, 'login']);
 
+//Routes for user details
+
+Route::post('/userd', [UserDetController::class, 'create']);
+Route::get('/userd', [UserDetController::class, 'read']);
+Route::get('/userd/{userd}', [UserDetController::class, 'show']);
+Route::put('/userd/{userd}', [UserDetController::class, 'update']);
+Route::delete('/userd/{userd}', [UserDetController::class, 'destroy']);
 
 //Routes for food
 
