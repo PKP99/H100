@@ -25,9 +25,10 @@ class PricechartController extends Controller
           ]);     
       }
 
-    public function index()
+    public function index(Request $req)
     {
-        $data = pricechart::all();
+        $exid = $req->exid;
+        $data = pricechart::where('ex_id',$exid)->get();
     
         return $data;
     }

@@ -18,5 +18,8 @@ class Nutritionist extends Model
         'bank_name',
         'ex_id',
         'type',
+        'Degree',
+        'Details',
+        'mobile_no'
     ];
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\NutritionistController;
 use App\Http\Controllers\UserDetController;
+use App\Http\Controllers\PricechartController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,6 +29,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [UserController::class, 'register']);
 
 Route::post('/login', [UserController::class, 'login']);
+Route::get('/users', [UserController::class, 'read']);
+Route::post('/changepwd', [UserController::class, 'changepassword']);
 
 //Routes for user details
 
@@ -36,11 +39,14 @@ Route::get('/userd', [UserDetController::class, 'read']);
 Route::get('/userd/{userd}', [UserDetController::class, 'show']);
 Route::put('/userd/{userd}', [UserDetController::class, 'update']);
 Route::delete('/userd/{userd}', [UserDetController::class, 'destroy']);
+Route::get('/userdprofile/{id}', [UserDetController::class, 'profile']);
 
 //Routes for food
 
 Route::post('/foods', [FoodController::class, 'create']);
 Route::get('/foods', [FoodController::class, 'read']);
+Route::post('/foodsearch', [FoodController::class, 'search']);
+Route::post('/fooddata', [FoodController::class, 'fooddata']);
 Route::get('/foods/{food}', [FoodController::class, 'show']);
 Route::put('/foods/{food}', [FoodController::class, 'update']);
 Route::delete('/foods/{food}', [FoodController::class, 'destroy']);
@@ -76,19 +82,21 @@ Route::get('/training', [TrainingController::class, 'read']);
 Route::get('/training/{training}', [TrainingController::class, 'show']);
 Route::put('/training/{training}', [TrainingController::class, 'update']);
 Route::delete('/training/{training}', [TrainingController::class, 'destroy']);
+Route::post('/trainingdetails', [TrainingController::class, 'readtype']);
 
 //Routes for NutriTrainer
 
 Route::post('/nutritrain', [NutritionistController::class, 'create']);
-Route::get('/nutritrain', [NutritionistController::class, 'read']);
+Route::post('/nutritrainget', [NutritionistController::class, 'index']);
 Route::get('/nutritrain/{nutritrain}', [NutritionistController::class, 'show']);
 Route::put('/nutritrain/{nutritrain}', [NutritionistController::class, 'update']);
 Route::delete('/nutritrain/{nutritrain}', [NutritionistController::class, 'destroy']);
+Route::get('/nutritrainpro/{id}', [NutritionistController::class, 'profile']);
 
-//Routes for NutriTrainer
+//Routes for PriceChart
 
 Route::post('/pricechart', [PricechartController::class, 'create']);
-Route::get('/pricechart', [PricechartController::class, 'read']);
+Route::post('/pricechartget', [PricechartController::class, 'index']);
 Route::get('/pricechart/{pricechart}', [PricechartController::class, 'show']);
 Route::put('/pricechart/{pricechart}', [PricechartController::class, 'update']);
 Route::delete('/pricechart/{pricechart}', [PricechartController::class, 'destroy']);

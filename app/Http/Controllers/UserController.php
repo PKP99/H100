@@ -23,11 +23,6 @@ class UserController extends Controller
 
     function login(Request $req){
 
-        $storeData = $req->validate([
-            'email' => 'required|max:200',
-            'password' => 'required|max:100',
-        ]);
-
         $user =User::where('email',$req->email)->first();
 
        if(!$user){
@@ -41,6 +36,28 @@ class UserController extends Controller
                 ]);
         }
         else return $user;
+    }
+    function changepassword(Request $req){
+
+        $user =User::where('email',$req->email)->first();
+
+       if(!$user){
+                return response([
+                    'error'=>["Email not found!"]
+                ]);
+        }
+        else{
+            $user->password= Hash::make($req->password);
+            $user->save();
+
+            return $user;
+        }
+    }
+    public function read(){
+        
+        $text = "User";
+        $users = User::where('type', $text)->paginate(5);
+        return $users;
     }
     public function updatepass(Request $req, $id){
 

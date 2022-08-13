@@ -16,6 +16,7 @@ class TrainingController extends Controller
           $train->type= $req->type;
           $train->content= $req->content;
           $train->content_type= $req->content_type;
+          $train->language= $req->language;
           
           $train->save();
 
@@ -30,6 +31,37 @@ class TrainingController extends Controller
     
         return $data;
     }
+
+    public function readtype(Request $request){
+        
+        $lang = $request->language;
+        $ttype = $request->ttype;
+        $ctype = $request->ctype;
+
+        if($lang=='All'){
+                $data = Training::where('type',$ttype)->where('content_type',$ctype)->paginate(45);
+        }
+        else{
+            if($ctype == 'firstimage'){
+                $data = Training::where('type',$ttype)->where('content_type',$ctype)->get();
+            }
+            else if($ctype == 'youtube'){
+            $data =Training::where('type',$ttype)->where('language',$lang)->where('content_type',$ctype)->paginate(45);
+            }
+            else if($ctype == 'ex_link'){
+                $data =Training::where('type',$ttype)->where('language',$lang)->where('content_type',$ctype)->paginate(45);
+                }
+        }
+
+        if(!$data){
+           return response([
+               'error'=>["Data not found!"]
+           ]);
+        }
+        else{ 
+            return $data;
+        }
+      }
     
     public function show($id){
         $data =Training::where('id',$id)->first();

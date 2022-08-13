@@ -21,6 +21,9 @@ class NutritionistController extends Controller
           $data->bank_name= $req->bank_name;
           $data->ex_id= $req->ex_id;
           $data->type= $req->type;
+          $data->Degree= $req->degree;
+          $data->Details= $req->details;
+          $data->mobile_no= $req->mobile_no;
           
           $data->save();
 
@@ -29,9 +32,15 @@ class NutritionistController extends Controller
           ]);     
       }
 
-    public function index()
+    public function index(Request $req)
     {
-        $data = Nutritionist::all();
+        $usertype = $req->sel;
+        if($usertype =='All'){
+          $data = Nutritionist::paginate(40);  
+        }
+        else{
+        $data = Nutritionist::where('type',$usertype)->paginate(40);
+        }
     
         return $data;
     }
@@ -58,6 +67,9 @@ class NutritionistController extends Controller
           $data->bank_name= $req->bank_name;
           $data->ex_id= $req->ex_id;
           $data->type= $req->type;
+          $data->Degree= $req->degree;
+          $data->Details= $req->details;
+          $data->mobile_no= $req->mobile_no;
           
           $data->save();
 
@@ -73,4 +85,11 @@ class NutritionistController extends Controller
               'message'=>["Data has been deleted"]
           ]);    
      }
+
+     public function profile($id){
+        $userd = Nutritionist::where('ex_id', $id)->first();
+        
+        return $userd;
+  
+      }
 }

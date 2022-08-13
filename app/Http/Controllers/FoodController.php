@@ -11,7 +11,7 @@ class FoodController extends Controller
 {
       public function create(Request $req){
 
-          $food= new Food;
+        $food= new Food;
         $food->name= $req->fname;
         $food->calorific_value= $req->cvalue;
         $food->type= $req->type;
@@ -25,9 +25,30 @@ class FoodController extends Controller
       }
 
       public function read(){
-          $food = Food::all();
-          
+          $val = 0;
+          $food = Food::where('id','>',$val)->paginate(10);
           return $food;
+      }
+
+      public function search(Request $request){
+      
+        $term = $request->term;
+
+        $food = Food::where('name', 'ilike', '%' . $term . '%')->get();
+        return $food;
+      }
+
+      public function fooddata(Request $request){
+      
+        $term = $request->term;
+
+        if($term = 'All'){
+          $food = Food::all();
+        }
+        else{
+        $food = Food::where('type',$term)->get();
+        }
+        return $food;
       }
 
       public function show($id){
